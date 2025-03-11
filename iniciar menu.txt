@@ -1,0 +1,55 @@
+iniciar menu
+pede para o usuario escolher uma opcao
+caso 1 - > user.gistrarUser
+caso 2 ->  user.sairDoSistema
+caso 3 ->  hotel.AgendarDiaria
+senao -> mostrarErro
+
+
+class User{
+user String
+senhaValidada = false
+diasHospedados = 0
+
+nome = layor
+mostre bem vindo ao layor
+
+registrarUser
+pede o nome do usuario
+grava o user 
+validarSenha
+iniciar menu
+
+validarSenha
+pede a senha do usario
+grava a senha 
+caso a senha for = 2678
+senhaValidada = true
+senao validarSenha
+
+
+EntrarNoSistema
+mostre bem vindo ao hotel nome user! é um imenso prazer ter você por aqui!
+
+sairDoSistema
+mostre muito obrigado e até logo user
+
+mostrarErro
+erro na opcao escolhida
+}
+
+class hotel{
+
+qtdeQuartos = 20
+
+AgendarDiaria
+preco = 300
+qtdeDias Int
+caso qtdeDias <= 0 ou >=30
+	mostre numero de dias invalido
+	AgendarDiaria
+mostre quantos dias deseja ficar hospedados
+grava diasHospedados
+valor = preco * diasHospedados
+user(diasHospedados)
+}
