@@ -7,16 +7,13 @@ senao -> mostrarErro
 
 
 class User{
-user String
+nome String
 senhaValidada = false
 diasHospedados = 0
 
-nome = layor
-mostre bem vindo ao layor
-
 registrarUser
 pede o nome do usuario
-grava o user 
+grava o nome 
 validarSenha
 iniciar menu
 
@@ -28,28 +25,28 @@ senhaValidada = true
 senao validarSenha
 
 
-EntrarNoSistema
-mostre bem vindo ao hotel nome user! é um imenso prazer ter você por aqui!
-
-sairDoSistema
-mostre muito obrigado e até logo user
-
-mostrarErro
-erro na opcao escolhida
 }
 
 class hotel{
+
+nome = layor
+quandoInstanciada
+	mostre bem vindo ao hotel nome User.nome! é um imenso prazer ter você por aqui!
 
 qtdeQuartos = 20
 
 AgendarDiaria
 preco = 300
-qtdeDias Int
+mostre quantos dias deseja ficar hospedados
+grava qtdeDias como inteiro
 caso qtdeDias <= 0 ou >=30
 	mostre numero de dias invalido
 	AgendarDiaria
-mostre quantos dias deseja ficar hospedados
+
 grava diasHospedados
 valor = preco * diasHospedados
-user(diasHospedados)
+user.diasHospedados = diasHospedados
+
+
+
 }
