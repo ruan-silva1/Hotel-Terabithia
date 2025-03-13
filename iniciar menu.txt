@@ -1,6 +1,6 @@
 iniciar menu
 pede para o usuario escolher uma opcao
-caso 1 - > user.gistrarUser
+caso 1 - > user.registrarUser
 caso 2 ->  user.sairDoSistema
 caso 3 ->  hotel.AgendarDiaria
 senao -> mostrarErro
@@ -28,12 +28,11 @@ senao validarSenha
 }
 
 class hotel{
-
+quartos = 1..20
 nome = layor
 quandoInstanciada
+	se senha validada for igual true
 	mostre bem vindo ao hotel nome User.nome! é um imenso prazer ter você por aqui!
-
-qtdeQuartos = 20
 
 AgendarDiaria
 preco = 300
@@ -43,10 +42,30 @@ caso qtdeDias <= 0 ou >=30
 	mostre numero de dias invalido
 	AgendarDiaria
 
-grava diasHospedados
 valor = preco * diasHospedados
 user.diasHospedados = diasHospedados
-
-
+mostre qual o nome do hospede
+grava nome
+mostre para ele escolher um quarto de 1 a 20
+grava quarto como inteiro
+se quartos nao contem quarto
+	mostre quarto indisponivel utilize outro
+se nao 
+	remova o quarto de quartos
+percorre quartos
+	mostre e
+mostre confirmma reserva?
+se sim 
+	mostre quarto confirmado com sucesso
+se nao 
+	iniciarMenu
 
 }
+
+
+registrar
+ruan 10
+2678
+agendar diaria
+10
+
