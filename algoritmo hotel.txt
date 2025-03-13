@@ -1,10 +1,19 @@
 iniciar menu
+enquanto verdadeiro
 pede para o usuario escolher uma opcao
-caso 1 - > user.registrarUser
-caso 2 ->  user.sairDoSistema
-caso 3 ->  hotel.AgendarDiaria
-senao -> mostrarErro
+grave escolhar menu como entrada numerica
+caso escolha menu
+seja 1 - > user.registrarUser
+seja 2 ->  hotel.AgendarDiaria
+seja 3 ->  mostre saindo pare
+senao -> mostrar Erro
 
+
+
+lerEntradaNumerica
+enquanto verdadeiro
+tente retornar leitura como inteiro
+em exececoes mostre entrada invalida!
 
 class User{
 nome String
@@ -15,14 +24,18 @@ registrarUser
 pede o nome do usuario
 grava o nome 
 validarSenha
-iniciar menu
+mostre usuario registrado com sucesso
 
 validarSenha
+enquanto verdadeiro
 pede a senha do usario
 grava a senha 
-caso a senha for = 2678
+se a senha for = 2678
 senhaValidada = true
-senao validarSenha
+pare
+senao
+mostre senha invalida
+ validarSenha
 
 
 }
@@ -33,27 +46,26 @@ nome = layor
 quandoInstanciada
 	se senha validada for igual true
 	mostre bem vindo ao hotel nome User.nome! é um imenso prazer ter você por aqui!
+	se nao 
+		user nao registrado faça um registro
+		user.registrarUser()
 
 AgendarDiaria
-preco = 300
 mostre quantos dias deseja ficar hospedados
 grava qtdeDias como inteiro
 caso qtdeDias <= 0 ou >=30
 	mostre numero de dias invalido
 	AgendarDiaria
 
-valor = preco * diasHospedados
-user.diasHospedados = diasHospedados
-mostre qual o nome do hospede
-grava nome
-mostre para ele escolher um quarto de 1 a 20
+percorre e de quartos
+mostre para ele escolher um e disponivel
 grava quarto como inteiro
 se quartos nao contem quarto
 	mostre quarto indisponivel utilize outro
 se nao 
-	remova o quarto de quartos
-percorre quartos
-	mostre e
+	remova de quartos o quarto no indice de e
+valor = preco * diasHospedados
+user.diasHospedados = diasHospedados
 mostre confirmma reserva?
 se sim 
 	mostre quarto confirmado com sucesso
@@ -62,10 +74,4 @@ se nao
 
 }
 
-
-registrar
-ruan 10
-2678
-agendar diaria
-10
 
