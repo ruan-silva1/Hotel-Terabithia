@@ -1,11 +1,13 @@
 package org.example
+val usuarios: MutableList<List<String>> = mutableListOf()
+val quartos = (1..20).toMutableList()
 
 fun main() {
-    val user = User()
+    val user = Admin()
     iniciarMenu(user)
 }
 
-fun iniciarMenu(user: User) {
+fun iniciarMenu(admin: Admin) {
     while (true) {
         println(
             """Escolha uma das opções abaixo:
@@ -16,9 +18,9 @@ fun iniciarMenu(user: User) {
         )
         val escolhaMenu = lerEntradaNumerica()
         when (escolhaMenu) {
-            1 -> user.registrarUser()
+            1 -> admin.loginAdmin()
             2 -> {
-                val hotel = Hotel(user)
+                val hotel = Hotel(admin)
                 hotel.agendarDiaria()
             }
             3 -> {
@@ -40,22 +42,25 @@ fun lerEntradaNumerica(): Int {
     }
 }
 
-class User {
+class User{
+    var quartoAgendado = 0
+    var qtdeDias = 0
+}
+
+class Admin {
     var nome: String = ""
     var senhaValidada = false
-    var diasHospedados = 0
-    var quarto: Int = 0
 
-    fun registrarUser() {
-        println("Qual seu nome?")
+    fun loginAdmin() {
+        println("Qual nome do admin")
         this.nome = readln()
         validarSenha()
-        println("Usuário registrado com sucesso!")
+        println("admin logado com sucesso!")
     }
 
     private fun validarSenha() {
         while (true) {
-            println("Qual a sua senha?")
+            println("Qual a senha?")
             val senha = lerEntradaNumerica()
             if (senha == 2678) {
                 this.senhaValidada = true
@@ -67,36 +72,71 @@ class User {
     }
 }
 
-class Hotel(val user: User) {
-    private val quartos = (1..20).toMutableList()
+
+class Hotel(val admin: Admin) {
+    var user = User()
+    val hospedes = mutableListOf<String>()
     private val nome = "Lyor"
+    var gratuitates = 0
+    var meias = 0
+    var completas = 0
+    var somarPreco = 0
 
     init {
-        if (user.senhaValidada) {
-            println("Bem-vindo ao hotel $nome, ${user.nome}! É um imenso prazer tê-lo por aqui!")
+        if (admin.senhaValidada) {
+            println("Bem-vindo ao hotel $nome, ${admin.nome}! É um imenso prazer tê-lo por aqui!")
         } else {
-            println("Usuário não registrado. Redirecionando para o registro...")
-            user.registrarUser()
+            println("admin não logado. Redirecionando para o login..")
+            admin.loginAdmin()
         }
     }
 
     fun agendarDiaria() {
-        println("Quantos dias deseja ficar hospedado?")
-        val qtdeDias = lerEntradaNumerica()
-
-        if (qtdeDias <= 0 || qtdeDias >= 30) {
+        var nomeHospede: String = ""
+        println("qual valor padrao da diaria?")
+        val preco = lerEntradaNumerica()
+        while(true){
+        println("Quantos dias os hospedes desejam ficar hospedado?")
+        user.qtdeDias = lerEntradaNumerica()
+        if (user.qtdeDias <= 0 || user.qtdeDias >= 30) {
             println("Número de dias inválido. O número de dias deve ser entre 1 e 29.")
-            return
+        }else{
+            break
+        }
         }
 
-        user.diasHospedados = qtdeDias
+        while(nomeHospede!="pare"){
+            println("qual o nome do hospede")
+            nomeHospede = readln()
+            if(nomeHospede=="pare"){
+                break
+            }
+            println("qual a idade do hospede")
+            val idade = lerEntradaNumerica()
+            this.hospedes.add(nomeHospede)
+            if(idade <7){
+                println("tem entrada gratuitada")
+                this.gratuitates++
+                this.somarPreco+=0
+            }else if(idade > 60){
+                this.meias++
+                println("paga meia")
+                this.somarPreco+=(preco/2)
+            }else{
+                this.completas++
+                println("paga entrada complete")
+                this.somarPreco+=preco
+            }
+
+        }
+
         escolherQuarto()
-        val valor = 300 * qtdeDias
-        println("O valor total da estadia é R$$valor. Confirmar reserva? (S/N)")
+        println("O valor total da estadia é R$ ${this.somarPreco * user.qtdeDias} sendo ${this.gratuitates} entradas gratuitas ${this.meias} meia entrada ${this.completas} entradas completas . Confirmar reserva? (S/N)")
 
         val confirmacao = readln().lowercase()
         if (confirmacao == "s") {
-            println("Parabéns, ${user.nome}! Seu quarto foi agendado com sucesso. O número do quarto é ${user.quarto}.")
+            println("Parabéns, o quarto de ${hospedes.joinToString()}, foi agendado com sucesso. O número do quarto é ${this.user.quartoAgendado}")
+            usuarios.add(this.hospedes)
         } else {
             println("Reserva cancelada.")
         }
@@ -104,15 +144,15 @@ class Hotel(val user: User) {
 
     private fun escolherQuarto() {
         println("Escolha um dos quartos disponíveis:")
-        for (quarto in quartos) {
-            print("$quarto, ")
+        for (e in quartos) {
+            print("$e, ")
         }
         println()
         val numeroQuarto = lerEntradaNumerica()
         if (quartos.contains(numeroQuarto)) {
-            user.quarto = numeroQuarto
             quartos.remove(numeroQuarto)
-            println("Quarto $numeroQuarto reservado para você!")
+            this.user.quartoAgendado = numeroQuarto
+            println("Quarto $numeroQuarto reservado para ${hospedes.joinToString()}!")
         } else {
             println("Quarto indisponível. Por favor, escolha outro.")
             escolherQuarto()
