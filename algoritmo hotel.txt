@@ -1,4 +1,5 @@
 usuarios = []
+quartosUsuarios = []
 iniciar menu
 enquanto verdadeiro
 pede para o usuario escolher uma opcao
@@ -7,6 +8,8 @@ caso escolha menu
 seja 1 - > admin.LoginAdmin
 seja 2 ->  hotel.AgendarDiaria
 seja 3 ->  mostre saindo pare
+seja 4 -> hotel.mostrarHospedes
+seja 5 -> hotel.pesquisarHospedes
 senao -> mostrar Erro
 
 lerEntradaNumerica
@@ -91,14 +94,34 @@ grava quarto como inteiro
 se quartos nao contem quarto
 	mostre quarto indisponivel utilize outro
 se nao 
-	remova de quartos o quarto no indice de e
+	
 mostre confirmma reserva no quarto pelo valor somaPrecos com gratuitades meias e completos?
 se sim 
+	remova de quartos o quarto no indice de e
+	adicione quarto a quartosHospedes
 	mostre quarto confirmado com sucesso para os hospedes ... 
 	adiciona a lista de hospedes a lista de usuarios
 se nao 
 	iniciarMenu
 
+mostrar todos os hospedes
+se tamanho de hospedes é 0 
+	mostre nao ha hospedes
+se nao 
+	mostre hospede | quarto
+	percorre i,e de usuarios
+		mostre e.juncaoporString | quartos[i]
+	
+pesquisarHospede
+usuario encontrado = false
+pede pelo nome do hospede
+percorre i,e de usuarios
+	se e contem nome
+		mostre o nome esta em quarto[i]
+		usuario encontrado = true
+
+se usuario encontrado == false
+	mostre usuario nao encontrado
 }
 
 

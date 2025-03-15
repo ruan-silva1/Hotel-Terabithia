@@ -1,6 +1,7 @@
 package org.example
 val usuarios: MutableList<List<String>> = mutableListOf()
-val quartos = (1..20).toMutableList()
+val quartosDisponiveis = (1..20).toMutableList()
+val quartosUsuarios = mutableListOf<Int>()
 
 fun main() {
     val user = Admin()
@@ -14,6 +15,8 @@ fun iniciarMenu(admin: Admin) {
             |1- Fazer registro
             |2- Agendar diária
             |3- Sair
+            |4- mostrar hospedes
+            |5- pesquisar hospedes
             """.trimMargin()
         )
         val escolhaMenu = lerEntradaNumerica()
@@ -26,6 +29,14 @@ fun iniciarMenu(admin: Admin) {
             3 -> {
                 println("Saindo...")
                 break
+            }
+            4-> {
+                val hotel = Hotel(admin)
+                hotel.mostrarHospedes()
+                }
+            5->{
+                val hotel = Hotel(admin)
+                hotel.pesquisarHospedes()
             }
             else -> println("Opção inválida. Tente novamente.")
         }
@@ -137,6 +148,7 @@ class Hotel(val admin: Admin) {
         if (confirmacao == "s") {
             println("Parabéns, o quarto de ${hospedes.joinToString()}, foi agendado com sucesso. O número do quarto é ${this.user.quartoAgendado}")
             usuarios.add(this.hospedes)
+            quartosUsuarios.add(user.quartoAgendado)
         } else {
             println("Reserva cancelada.")
         }
@@ -144,18 +156,48 @@ class Hotel(val admin: Admin) {
 
     private fun escolherQuarto() {
         println("Escolha um dos quartos disponíveis:")
-        for (e in quartos) {
+        for (e in quartosDisponiveis) {
             print("$e, ")
         }
         println()
         val numeroQuarto = lerEntradaNumerica()
-        if (quartos.contains(numeroQuarto)) {
-            quartos.remove(numeroQuarto)
+        if (quartosDisponiveis.contains(numeroQuarto)) {
+            quartosDisponiveis.remove(numeroQuarto)
             this.user.quartoAgendado = numeroQuarto
             println("Quarto $numeroQuarto reservado para ${hospedes.joinToString()}!")
         } else {
             println("Quarto indisponível. Por favor, escolha outro.")
             escolherQuarto()
+        }
+    }
+
+    fun mostrarHospedes(){
+        if(usuarios.size == 0){
+            println("nao há hospedes")
+        }
+        else{
+            println("HOSPEDE${" ".padEnd(20)} | QUARTO") // Cabeçalho alinhado
+            for ((i, e) in usuarios.withIndex()) {
+                val hospede = e.joinToString().padEnd(20) // Alinha o nome do hóspede em 20 caracteres
+                val quarto = quartosUsuarios[i].toString().padEnd(10) // Alinha o número do quarto em 10 caracteres
+                println("$hospede | $quarto")
+            }
+        }
+
+    }
+
+    fun pesquisarHospedes(){
+        var usuarioEncontrado = false
+        println("qual nome do hospede")
+        val nomePesquisado = readln()
+        for ((i, e) in usuarios.withIndex()) {
+           if(e.contains(nomePesquisado)){
+               println("usuario $nomePesquisado esta no quarto ${quartosUsuarios[i]}")
+               usuarioEncontrado = true
+           }
+        }
+        if(!usuarioEncontrado){
+            println("usuario nao encontrado")
         }
     }
 }
