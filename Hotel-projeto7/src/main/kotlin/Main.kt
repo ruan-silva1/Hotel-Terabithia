@@ -17,6 +17,7 @@ fun iniciarMenu(admin: Admin) {
             |3- Sair
             |4- mostrar hospedes
             |5- pesquisar hospedes
+            |6- cadastrar Evento
             """.trimMargin()
         )
         val escolhaMenu = lerEntradaNumerica()
@@ -37,6 +38,10 @@ fun iniciarMenu(admin: Admin) {
             5->{
                 val hotel = Hotel(admin)
                 hotel.pesquisarHospedes()
+            }
+            6->{
+                val evento = Evento()
+                evento.cadastrarEvento()
             }
             else -> println("Opção inválida. Tente novamente.")
         }
@@ -87,7 +92,12 @@ class Admin {
 class Hotel(val admin: Admin) {
     var user = User()
     val hospedes = mutableListOf<String>()
+    val datasDeEventos = mutableListOf<List<Any>>()
+    val auditoriosReservados = mutableListOf<String>()
     private val nome = "Lyor"
+    val auditorioLaranja = 150
+    val cadeirasDisponiveis = 70
+    val auditorioColorado = 350
     var gratuitates = 0
     var meias = 0
     var completas = 0
@@ -201,3 +211,79 @@ class Hotel(val admin: Admin) {
         }
     }
 }
+
+class Evento {
+    val data = mutableListOf<Any>() // Armazena mês, horário e ano
+    val auditorio = mutableListOf<String>() // Armazena informações sobre o auditório
+    val admin = Admin()
+    val hotel = Hotel(admin) // Instância da classe Hotel
+    var numeroConvidados = 0 // Número de convidados para o evento
+
+    fun cadastrarEvento() {
+        while (true) {
+            println("Qual o número de convidados para o evento?")
+            numeroConvidados = lerEntradaNumerica()
+
+            when {
+                numeroConvidados < 10 || numeroConvidados > 350 -> {
+                    println("Número inválido! Digite um número de 10 a 350.")
+                }
+
+                numeroConvidados in 10..219 -> {
+                    if (numeroConvidados <= hotel.auditorioLaranja) {
+                        println("Auditório Laranja será reservado.")
+                        hotel.auditoriosReservados.add("Laranja")
+                    } else {
+                        val numeroCadeirasAdicionais = numeroConvidados - hotel.auditorioLaranja
+                        println("Auditório Laranja será reservado, incluindo mais $numeroCadeirasAdicionais cadeiras adicionais.")
+                        hotel.auditoriosReservados.add("Laranja com $numeroCadeirasAdicionais cadeiras adicionais")
+                    }
+                    break
+                }
+
+                numeroConvidados in 220..350 -> {
+                    println("O Auditório Colorado será reservado.")
+                    hotel.auditoriosReservados.add("Colorado")
+                    break
+                }
+            }
+        }
+
+        hotel.datasDeEventos.forEach { evento ->
+            println(evento) // Imprime cada evento (que é uma lista)
+        }
+
+        println("Qual o mês para o evento? (1 a 12)")
+        val mesEvento = lerEntradaNumerica()
+
+        var dataValida = false
+        var horario = 0
+        while (!dataValida) {
+            println("Qual o horário para início do evento? (8 a 23)")
+            horario = lerEntradaNumerica()
+            if (horario !in 8..23) {
+                println("Horário inválido!")
+            } else {
+                dataValida = true
+            }
+        }
+
+        // Adiciona a data do evento (mês, horário, ano)
+        data.addAll(listOf(mesEvento, horario, 2025))
+
+        // Verifica se a data já está reservada
+        for (e in hotel.datasDeEventos) {
+            if (e == data) {
+                println("Horário já reservado!")
+                return
+            }
+        }
+
+        // Adiciona a data e o auditório reservado
+        println("evento registrado com sucesso!")
+        hotel.datasDeEventos.add(data)
+        hotel.auditoriosReservados.addAll(auditorio)
+    }
+
+}
+

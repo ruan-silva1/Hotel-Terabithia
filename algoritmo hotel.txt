@@ -43,6 +43,12 @@ mostre senha invalida
 }
 
 class hotel{
+diasDeEventos = [[7,3,17:00]]
+AuditoriosReservados = [[laranja, 40 cadeiras]]
+cadeirasDoAuditorioLaraanja = 150
+cadeirasLivres = 70
+cadeirasDoAuditorioVermelho = 350
+locaisHospedados = []
 usuarios = lista mutavel de Strings[]
 quartos = 1..20
 gratuitades = 0
@@ -122,6 +128,54 @@ percorre i,e de usuarios
 
 se usuario encontrado == false
 	mostre usuario nao encontrado
+
+}
+
+class eventos{
+data = listaMutavel[]
+auditorio = listaMutavel[]
+numeroConvidados
+
+cadastrarEvento
+execute infinito
+pergunte ao usuario o numero de convidados 
+grava o numero como entrada numerica
+	se o numero for menor que 10 ou maior que 350
+		 mostre numero invalido
+	senao
+		pare execucao
+se numero for maior que 1 e menor que 220
+	numCadeiras = if(numero - auditorioLaranja > 0) return numero - auditorioLaranja else 0
+	mostre auditorio laranja mais adequado inclua mais numCadeiras  de cadeiras
+	hotel.auditorio.add(["laranja","numCadeiras cadeiras"])
+mas se numero for maior que 220
+	mostre auditorio colorado mais adequado
+	auditorio.add(["colorado"])
+mostre qual mes do evento
+grava mes
+** validar mes
+mostre qual dia do evento
+grava dia como lerEntradaNumerica
+** validar dia
+
+dataValidada = false
+enquanto dataValidada == false
+	mostre qual horario do inicio do evento
+	grava horario como int
+	se horario for <8 ou maior que 23
+		mostre horario invalido
+	senao dataValidada == true
+	
+data.add(listOf(mes,dia,2025))
+percorre e de hotel.diasDeEventos
+	se e.é igual = data
+		mostre data já está ocupada escolha outro horario
+		dataValidada = false
+	senao 
+		hotel.diasDeEventos.add[data]
+		hotel.AuditoriosReservados.add[auditorio]
+
+
 }
 
 
