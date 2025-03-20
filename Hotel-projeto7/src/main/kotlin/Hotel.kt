@@ -116,4 +116,46 @@ class Hotel(val admin: Admin) {
             println("usuario nao encontrado")
         }
     }
+
+     fun cadastrarServico() {
+        var resposta: String
+        do {
+            println("qual nome da empresa ")
+            val nomeEmpresa = readLine() ?: ""
+            println("qual valor do serviço ")
+            val valor = readLine()?.toDoubleOrNull() ?: 0.0
+            println("qual a quantidade de aparelhos em manutenção ")
+            val quantidadeDeAparelhos = readLine()?.toIntOrNull() ?: 0
+            println("qual a quantidade minima de aparelhos para promoção ")
+            val quantidadeMinimaDeAparelhos = readLine()?.toIntOrNull() ?: 0
+
+            var valorDesconto = 0.0
+            if (quantidadeMinimaDeAparelhos <= quantidadeDeAparelhos) {
+                println("quantos porcento de desconto? ")
+                valorDesconto = readLine()?.toDoubleOrNull() ?: 0.0
+                valorDesconto /= 100
+            }
+
+            var valorFinal = valor * quantidadeDeAparelhos
+            valorFinal -= valorFinal * valorDesconto
+
+            empresas.add(nomeEmpresa)
+            valoresPorEmpresa.add(valorFinal)
+
+            println("serviço feito com a $nomeEmpresa de $quantidadeDeAparelhos aparelhos por $valorFinal \n")
+            println("Deseja calcular outros servicos?")
+            resposta = readLine() ?: ""
+        } while (resposta.equals("s", ignoreCase = true))
+    }
+
+     fun mostrarEmpresasEValores() {
+        if (empresas.size > 0) {
+            println("empresa | Valor Serviço")
+            for ((i,e) in empresas.withIndex()) {
+                println("${empresas[i]} | ${valoresPorEmpresa[i]} ")
+            }
+        } else {
+            println("nenhuma empresa cadastrada")
+        }
+    }
 }

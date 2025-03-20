@@ -45,13 +45,13 @@ class Evento(admin: Admin){
         }
 
         escolherDataEvento()
-
-        for (e in datasDeEventos) {
-           while (e == data) {
-                println("Horário já reservado!")
-                escolherDataEvento()
+        for(e in datasDeEventos){
+                if(e == data){
+                    println("data ja escolhida! Escolha outro horario")
+                    return
             }
         }
+
             datasDeEventos.add(data)
             auditoriosReservados.addAll(auditorio)
             println("evento registrado com sucesso! na data ${data[0]}/${data[1]}/${data[2]} as ${data[3]} horas")
@@ -74,5 +74,7 @@ class Evento(admin: Admin){
         }
         data.addAll(listOf(diaEvento, mesEvento, 2025, horario))
     }
+
+
 }
 

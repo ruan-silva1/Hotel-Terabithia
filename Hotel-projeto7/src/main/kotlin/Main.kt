@@ -4,6 +4,8 @@ val quartosDisponiveis = (1..20).toMutableList()
 val quartosUsuarios = mutableListOf<Int>()
 val auditoriosReservados = mutableListOf<String>()
 val datasDeEventos = mutableListOf<List<Any>>()
+val empresas = mutableListOf<String?>()
+val valoresPorEmpresa = mutableListOf<Double?>()
 
 fun main() {
     val admin = Admin()
@@ -20,6 +22,8 @@ fun iniciarMenu(admin: Admin) {
             |4- mostrar hospedes
             |5- pesquisar hospedes
             |6- cadastrar Evento
+            |7- cadastrar Servicos
+            |8- verificar Empresas e valores
             """.trimMargin()
         )
         val escolhaMenu = Utils.lerEntradaNumerica()
@@ -44,6 +48,14 @@ fun iniciarMenu(admin: Admin) {
             6->{
                 val evento = Evento(admin)
                 evento.cadastrarEvento()
+            }
+            7->{
+                val hotel = Hotel(admin)
+                hotel.cadastrarServico()
+            }
+            8->{
+                val hotel = Hotel(admin)
+                hotel.mostrarEmpresasEValores()
             }
             else -> println("Opção inválida. Tente novamente.")
         }
