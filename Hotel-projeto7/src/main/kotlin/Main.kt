@@ -60,8 +60,9 @@ fun iniciarMenu(admin: Admin) {
             }
             9-> {
                 val veiculos = Veiculos()
-                else -> println("Opção inválida. Tente novamente.")
+                veiculos.
             }
+            else -> println("Opção inválida. Tente novamente.")
         }
     }
 }
