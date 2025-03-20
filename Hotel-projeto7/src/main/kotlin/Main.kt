@@ -24,6 +24,7 @@ fun iniciarMenu(admin: Admin) {
             |6- cadastrar Evento
             |7- cadastrar Servicos
             |8- verificar Empresas e valores
+            |9- calcularGasolina
             """.trimMargin()
         )
         val escolhaMenu = Utils.lerEntradaNumerica()
@@ -57,7 +58,10 @@ fun iniciarMenu(admin: Admin) {
                 val hotel = Hotel(admin)
                 hotel.mostrarEmpresasEValores()
             }
-            else -> println("Opção inválida. Tente novamente.")
+            9-> {
+                val veiculos = Veiculos()
+                else -> println("Opção inválida. Tente novamente.")
+            }
         }
     }
 }
