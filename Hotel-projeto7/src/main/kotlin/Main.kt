@@ -59,8 +59,8 @@ fun iniciarMenu(admin: Admin) {
                 hotel.mostrarEmpresasEValores()
             }
             9-> {
-                val veiculos = Veiculos()
-                veiculos.
+                val veiculos = Veiculo()
+                veiculos.calcularValorPosto()
             }
             else -> println("Opção inválida. Tente novamente.")
         }
