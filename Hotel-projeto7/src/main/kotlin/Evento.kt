@@ -55,6 +55,7 @@ class Evento(admin: Admin){
             datasDeEventos.add(data)
             auditoriosReservados.addAll(auditorio)
             println("evento registrado com sucesso! na data ${data[0]}/${data[1]}/${data[2]} as ${data[3]} horas")
+            calcularPrecoAlimento(numeroConvidados)
     }
 
     private fun escolherDataEvento(){
@@ -75,6 +76,20 @@ class Evento(admin: Admin){
         data.addAll(listOf(diaEvento, mesEvento, 2025, horario))
     }
 
+    private fun calcularPrecoAlimento(quantidadeDeConvidados: Int){ //funcao para calcular buffet do evento
+            val quantidadeDeCafe = 0.2 * quantidadeDeConvidados
+            val quantidadeDeAgua = 0.5 * quantidadeDeConvidados
+            val quantidadeDeSalgados = 7.0 * quantidadeDeConvidados
+            val custoCafe = 0.80 * quantidadeDeCafe
+            val custoAgua = 0.40 * quantidadeDeAgua
+            val custoSalgado = 0.34 * quantidadeDeSalgados
+            val custoTotal = custoCafe + custoAgua + custoSalgado
+            valorLanche.add(custoTotal)
+            println("a quantidade de litros de cafe necessarias é " + quantidadeDeCafe + " litos")
+            println("a quantidade de litros de agua necessarias é " + quantidadeDeAgua + " litros")
+            println("a quantidade de salgados necessarias é " + quantidadeDeSalgados + " litros")
+            println("O custo total de lanche para $quantidadeDeConvidados convidados é $custoTotal")
+    }
 
 }
 

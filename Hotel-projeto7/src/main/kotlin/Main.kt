@@ -6,6 +6,7 @@ val auditoriosReservados = mutableListOf<String>()
 val datasDeEventos = mutableListOf<List<Any>>()
 val empresas = mutableListOf<String?>()
 val valoresPorEmpresa = mutableListOf<Double?>()
+val valorLanche = mutableListOf<Double?>()
 
 fun main() {
     val admin = Admin()
