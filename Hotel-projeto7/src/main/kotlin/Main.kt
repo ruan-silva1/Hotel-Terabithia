@@ -1,4 +1,5 @@
 package org.example
+
 val usuarios: MutableList<List<String>> = mutableListOf()
 val quartosDisponiveis = (1..20).toMutableList()
 val quartosUsuarios = mutableListOf<Int>()
@@ -7,6 +8,7 @@ val datasDeEventos = mutableListOf<List<Any>>()
 val empresas = mutableListOf<String?>()
 val valoresPorEmpresa = mutableListOf<Double?>()
 val valorLanche = mutableListOf<Double?>()
+
 
 fun main() {
     val admin = Admin()

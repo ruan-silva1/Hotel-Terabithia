@@ -1,6 +1,12 @@
 package org.example
-
+import kotlin.math.ceil
 class Evento(admin: Admin){
+    var horario = 0
+    var totalDeHorasEvento = 0
+    val horarioFinal: Int
+        get() = this.horario + this.totalDeHorasEvento
+
+
     val data = mutableListOf<Any>()
     val auditorio = mutableListOf<String>()
     val hotel = Hotel(admin)
@@ -38,7 +44,7 @@ class Evento(admin: Admin){
         if (datasDeEventos.isNotEmpty()) {
             println("Veja as datas já agendadas:")
             for ((i, e) in datasDeEventos.withIndex()) {
-                println("${e[0]}/${e[1]}/${e[2]} as ${e[3]} horas no auditorio ${auditoriosReservados[i]}")
+                println("${e[0]}/${e[1]}/${e[2]} das ${e[3]}:00 as ${e[4]}:00 no auditorio ${auditoriosReservados[i]}")
             }
         } else {
             println("Nenhuma data agendada.")
@@ -54,8 +60,9 @@ class Evento(admin: Admin){
 
             datasDeEventos.add(data)
             auditoriosReservados.addAll(auditorio)
-            println("evento registrado com sucesso! na data ${data[0]}/${data[1]}/${data[2]} as ${data[3]} horas")
+            println("evento registrado com sucesso! na data ${data[0]}/${data[1]}/${data[2]} das ${data[3]}:00 aa ${data[4]}:00")
             calcularPrecoAlimento(numeroConvidados)
+            calcularPrecoFuncionarios(numeroConvidados,this.totalDeHorasEvento)
     }
 
     private fun escolherDataEvento(){
@@ -63,17 +70,20 @@ class Evento(admin: Admin){
         val mesEvento = Utils.lerEntradaNumerica()
         println("Qual o dia para o evento? (1 a 31)")
         val diaEvento = Utils.lerEntradaNumerica()
-        var horario = 0
         while (true) {
             println("Qual o horário para início do evento? (8 a 23)")
-            horario = Utils.lerEntradaNumerica()
-            if (horario !in 8..23) {
+            this.horario = Utils.lerEntradaNumerica()
+            println("Quantas horas o evento irá durar?")
+            this.totalDeHorasEvento = Utils.lerEntradaNumerica()
+            if (this.horario !in 8..23 || this.horarioFinal > 23) {
                 println("Horário inválido!")
             } else {
                 break
             }
         }
-        data.addAll(listOf(diaEvento, mesEvento, 2025, horario))
+
+
+        data.addAll(listOf(diaEvento, mesEvento, 2025, this.horario, this.horarioFinal))
     }
 
     private fun calcularPrecoAlimento(quantidadeDeConvidados: Int){ //funcao para calcular buffet do evento
@@ -87,8 +97,20 @@ class Evento(admin: Admin){
             valorLanche.add(custoTotal)
             println("a quantidade de litros de cafe necessarias é " + quantidadeDeCafe + " litos")
             println("a quantidade de litros de agua necessarias é " + quantidadeDeAgua + " litros")
-            println("a quantidade de salgados necessarias é " + quantidadeDeSalgados + " litros")
+            println("a quantidade de salgados necessarias é " + quantidadeDeSalgados + " unidades")
             println("O custo total de lanche para $quantidadeDeConvidados convidados é $custoTotal")
+    }
+
+    private fun calcularPrecoFuncionarios(quantidadeDeConvidados: Int,totalHorasEvento: Int){
+        val custoGarcom = 10.50
+        var quantidadeDeGarcons = ceil(numeroConvidados / 12.0).toInt()
+
+        for (i in 0 until ceil(totalHorasEvento / 2.0).toInt()) {
+            quantidadeDeGarcons++
+        }
+
+        val total = custoGarcom * quantidadeDeGarcons
+        println("O valor total com funcionários é $total")
     }
 
 }
