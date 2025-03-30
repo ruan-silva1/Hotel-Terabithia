@@ -1,5 +1,9 @@
 package org.example
 import kotlin.math.ceil
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.time.DayOfWeek
+
 class Evento(admin: Admin){
     var horario = 0
     var totalDeHorasEvento = 0
@@ -75,7 +79,13 @@ class Evento(admin: Admin){
             this.horario = Utils.lerEntradaNumerica()
             println("Quantas horas o evento irá durar?")
             this.totalDeHorasEvento = Utils.lerEntradaNumerica()
-            if (this.horario !in 8..23 || this.horarioFinal > 23) {
+            val data = LocalDate.parse("${diaEvento}/${mesEvento}/2025", DateTimeFormatter.ofPattern("d/M/yyyy"))
+            var diaDaSemana = data.dayOfWeek
+            val horarioValidoDiaNormal = this.horario in 8..23 && this.horarioFinal <= 23
+            val horarioValidoFimDeSemana = this.horario in 8..15 && this.horarioFinal <= 15
+            val ehFimDeSemana = if(diaDaSemana == "SUNDAY" || diaDaSemana == "SATURDAY") {return true} else {return false}
+
+            if ((!ehFimDeSemana && !horarioValidoDiaNormal) || (ehDomingo && !horarioValidoDomingo)) {
                 println("Horário inválido!")
             } else {
                 break
