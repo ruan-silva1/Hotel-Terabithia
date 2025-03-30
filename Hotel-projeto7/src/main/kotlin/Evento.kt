@@ -74,18 +74,22 @@ class Evento(admin: Admin){
         val mesEvento = Utils.lerEntradaNumerica()
         println("Qual o dia para o evento? (1 a 31)")
         val diaEvento = Utils.lerEntradaNumerica()
+        val dataFormatada = LocalDate.parse("${diaEvento}/${mesEvento}/2025", DateTimeFormatter.ofPattern("d/M/yyyy"))
+        var diaDaSemana = dataFormatada.dayOfWeek.toString()
+        val ehFimDeSemana = if(diaDaSemana == "SUNDAY" || diaDaSemana == "SARTUDAY" ) true else false
         while (true) {
-            println("Qual o horário para início do evento? (8 a 23)")
+            when(ehFimDeSemana){
+                true -> println("Qual o horário para início do evento? (8 a 15)")
+                false-> println("Qual o horário para início do evento? (8 as 23)")
+            }
             this.horario = Utils.lerEntradaNumerica()
             println("Quantas horas o evento irá durar?")
             this.totalDeHorasEvento = Utils.lerEntradaNumerica()
-            val data = LocalDate.parse("${diaEvento}/${mesEvento}/2025", DateTimeFormatter.ofPattern("d/M/yyyy"))
-            var diaDaSemana = data.dayOfWeek
             val horarioValidoDiaNormal = this.horario in 8..23 && this.horarioFinal <= 23
+            println(horarioValidoDiaNormal)
             val horarioValidoFimDeSemana = this.horario in 8..15 && this.horarioFinal <= 15
-            val ehFimDeSemana = if(diaDaSemana == "SUNDAY" || diaDaSemana == "SATURDAY") {return true} else {return false}
-
-            if ((!ehFimDeSemana && !horarioValidoDiaNormal) || (ehDomingo && !horarioValidoDomingo)) {
+            println(horarioValidoFimDeSemana)
+            if ((!ehFimDeSemana && !horarioValidoDiaNormal) || (ehFimDeSemana && !horarioValidoFimDeSemana)) {
                 println("Horário inválido!")
             } else {
                 break
@@ -93,7 +97,7 @@ class Evento(admin: Admin){
         }
 
 
-        data.addAll(listOf(diaEvento, mesEvento, 2025, this.horario, this.horarioFinal))
+        this.data.addAll(listOf(diaEvento, mesEvento, 2025, this.horario, this.horarioFinal))
     }
 
     private fun calcularPrecoAlimento(quantidadeDeConvidados: Int){ //funcao para calcular buffet do evento
